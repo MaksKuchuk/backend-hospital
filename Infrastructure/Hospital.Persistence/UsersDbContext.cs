@@ -5,10 +5,10 @@ using Hospital.Persistence.EntityTypeConfigurations;
 
 namespace Hospital.Persistence;
 public class UsersDbContext : DbContext, IUsersDbContext {
-  public DbSet<User> Users { get; set; };
+  public DbSet<User> Users { get; set; }
   
   public UsersDbContext(DbContextOptions<UsersDbContext> options)
-  : base(options) { };
+  : base(options) { }
 
   protected override void OnModelCreating(ModelBuilder builder) {
     builder.ApplyConfiguration(new UserConfiguration());
