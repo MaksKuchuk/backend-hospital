@@ -5,11 +5,11 @@ namespace Hospital.Persistence.Validations;
 
 public class UserValidation
 {
-    public static Result<bool> IsValid(User user)
+    public static Result IsValid(User user)
     {
-        if (user.Name == string.Empty) return Result.Ok(false);
-        if (user.PhoneNumber == string.Empty) return Result.Ok(false);
+        if (user.Name == string.Empty) return Result.Fail("Name error");
+        if (user.PhoneNumber == string.Empty) return Result.Fail("Phone number error");
 
-        return Result.Ok(true);
+        return Result.Ok();
     }
 }

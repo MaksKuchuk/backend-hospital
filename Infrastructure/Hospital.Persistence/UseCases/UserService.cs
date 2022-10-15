@@ -30,7 +30,7 @@ public class UserService
 
     public Result<User> Register(User user)
     {
-        if (!UserValidation.IsValid(user).Value)
+        if (UserValidation.IsValid(user).IsFailure)
         {
             return Result.Fail<User>("Invalid user form");
         }
