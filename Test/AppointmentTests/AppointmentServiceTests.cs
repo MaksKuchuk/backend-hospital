@@ -13,12 +13,9 @@ public class AppointmentServiceTests
 {
     private readonly AppointmentService _appointmentService;
     private readonly Mock<IAppointmentRepository> _appointmentRepositoryMock;
-    private readonly ITestOutputHelper output;
 
     public AppointmentServiceTests(ITestOutputHelper output)
     {
-        this.output = output;
-        
         _appointmentRepositoryMock = new Mock<IAppointmentRepository>();
         _appointmentService = new AppointmentService(_appointmentRepositoryMock.Object);
     }
@@ -37,7 +34,7 @@ public class AppointmentServiceTests
         ));
         
         Assert.True(res.IsFailure);
-        Assert.Equal("Cannot add appointment", res.Error);
+        Assert.Equal("Cannot add an appointment", res.Error);
     }
     
     [Fact]
