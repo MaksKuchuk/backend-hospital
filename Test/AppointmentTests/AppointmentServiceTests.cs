@@ -61,6 +61,11 @@ public class AppointmentServiceTests
     [Fact]
     public void AppointmentGetAll_ShouldFail()
     {
+        _appointmentRepositoryMock.Setup(repository =>
+                repository.GetAllAppointmentBySpecialization(It.IsAny<Specialization>()))
+            .Returns(() => new List<Appointment>(new Appointment[1]
+                { new Appointment(Guid.Empty, Guid.Empty, DateTime.Today, DateTime.Now) }));
+        
         var res = _appointmentService.GetAll(new Specialization("123"));
         
         Assert.True(res.Success);

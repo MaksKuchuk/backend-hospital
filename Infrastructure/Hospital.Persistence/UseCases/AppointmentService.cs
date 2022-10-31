@@ -1,4 +1,5 @@
 using System.Dynamic;
+using AutoMapper.Configuration.Conventions;
 using Hospital.Domain;
 using Hospital.Persistence.Interfaces;
 using Hospital.Persistence.Validations;
@@ -26,31 +27,38 @@ public class AppointmentService
             return Result.Ok();
         }
         
-        return Result.Fail("Cannot add appointment");
+        return Result.Fail("Cannot add an appointment");
     }
 
     public Result<Appointment> AddToFreeDoctor(Specialization specialization)
     {
-        var res = GetAll(specialization);
-
-        if (res.IsFailure) return Result.Fail<Appointment>("Get error");
-
-        if (res.Value?.Count == 0) return Result.Fail<Appointment>("There is not free doctors");
-
-        var app = AddToDoctor(res.Value?[0]);
-
-        if (app.IsFailure) return Result.Fail<Appointment>(app.Error);
-        
-        return Result.Ok(res.Value[0]);
-    }
-
-    public Result<List<Appointment>> GetAll(Specialization specialization)
-    {
         if (SpecializationValidation.IsValid(specialization).IsFailure)
-            return Result.Fail<List<Appointment>>("Specialization error");
+            return Result.Fail<Appointment>("Specialization error");
         
         var res = _db.GetAllAppointmentBySpecialization(specialization);
 
-        return Result.Ok(res);
+        if (res.Count == 0) return Result.Fail<Appointment>("There is not free doctors");
+
+        var app = AddToDoctor(res[0]);
+
+        if (app.IsFailure) return Result.Fail<Appointment>(app.Error);
+        
+        return Result.Ok(res[0]);
+    }
+
+    public Result<List<DateTime>> GetAll(Specialization specialization)
+    {
+        if (SpecializationValidation.IsValid(specialization).IsFailure)
+            return Result.Fail<List<DateTime>>("Specialization error");
+        
+        var res = _db.GetAllAppointmentBySpecialization(specialization);
+        var resDate = new List<DateTime>();
+
+        for (var i = 0; i < res.Count; i++)
+        {
+            resDate.Add(res[i].StartTime);
+        }
+
+        return Result.Ok(resDate);
     }
 }
