@@ -66,7 +66,7 @@ public class AppointmentServiceTests
             .Returns(() => new List<Appointment>(new Appointment[1]
                 { new Appointment(Guid.Empty, Guid.Empty, DateTime.Today, DateTime.Now) }));
         
-        var res = _appointmentService.GetAll(new Specialization("123"));
+        var res = _appointmentService.GetAllFree(new Specialization("123"));
         
         Assert.True(res.Success);
     }

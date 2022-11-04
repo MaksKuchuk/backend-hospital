@@ -46,7 +46,7 @@ public class AppointmentService
         return Result.Ok(res[0]);
     }
 
-    public Result<List<DateTime>> GetAll(Specialization specialization)
+    public Result<List<DateTime>> GetAllFree(Specialization specialization)
     {
         if (SpecializationValidation.IsValid(specialization).IsFailure)
             return Result.Fail<List<DateTime>>("Specialization error");
