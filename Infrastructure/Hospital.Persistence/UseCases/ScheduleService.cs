@@ -15,7 +15,7 @@ public class ScheduleService
 
     public Result<Schedule> GetSchedule(Guid id, DateTime time)
     {
-        var res = _db.GetScheduleById(id, time);
+        var res = _db.GetScheduleByDoctorId(id, time);
 
         if (ScheduleValidation.IsValid(res).IsFailure) 
             return Result.Fail<Schedule>("Invalid schedule");
