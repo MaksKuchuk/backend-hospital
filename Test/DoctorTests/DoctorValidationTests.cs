@@ -13,10 +13,10 @@ public class DoctorValidationTests
 
     public DoctorValidationTests()
     {
-        _emptyDoctor = new Doctor(Guid.NewGuid(), "", new Specialization(""));
-        _nameDoctor = new Doctor(Guid.NewGuid(), "", new Specialization("any"));
+        _emptyDoctor = new Doctor(Guid.NewGuid(), "", new Specialization(Guid.Empty, ""));
+        _nameDoctor = new Doctor(Guid.NewGuid(), "", new Specialization(Guid.Empty, "any"));
         _specializationDoctor = 
-            new Doctor(Guid.NewGuid(), "any", new Specialization(""));
+            new Doctor(Guid.NewGuid(), "any", new Specialization(Guid.Empty, ""));
     }
 
     [Fact]

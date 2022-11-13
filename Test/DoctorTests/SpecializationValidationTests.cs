@@ -1,3 +1,4 @@
+using System;
 using Hospital.Domain;
 using Hospital.Persistence.Validations;
 using Xunit;
@@ -10,7 +11,7 @@ public class SpecializationValidationTests
 
     public SpecializationValidationTests()
     {
-        _specializationEmpty = new Specialization("");
+        _specializationEmpty = new Specialization(Guid.Empty, "");
     }
 
     [Fact]

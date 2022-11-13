@@ -27,7 +27,7 @@ public class AppointmentServiceTests
                 repository.AddAppointment(It.IsAny<Appointment>()))
             .Returns(() => false);
 
-        var res = _appointmentService.AddToDoctor(new Appointment(
+        var res = _appointmentService.AddToDoctor(new Appointment(Guid.Empty, 
             Guid.Empty, Guid.Empty,
             new DateTime(2010, 1, 1, 1, 1, 1),
             new DateTime(2010, 1, 1, 2, 1, 1)
@@ -45,7 +45,7 @@ public class AppointmentServiceTests
             .Returns(() => new List<Appointment>(new Appointment[1]));
         
         _appointmentRepositoryMock.Setup(repository =>
-                repository.AddAppointment(new Appointment(
+                repository.AddAppointment(new Appointment(Guid.Empty, 
                     Guid.Empty, Guid.Empty, 
                     new DateTime(2010, 1, 1, 1, 1, 1, 1),
                     new DateTime(2010, 1, 1, 2, 1, 1, 1)
@@ -53,7 +53,7 @@ public class AppointmentServiceTests
             .Returns(() => true);
 
         var res = _appointmentService.AddToFreeDoctor(
-            new Specialization("123"));
+            new Specialization(Guid.Empty, "123"));
 
         Assert.True(res.IsFailure);
     }
@@ -64,9 +64,9 @@ public class AppointmentServiceTests
         _appointmentRepositoryMock.Setup(repository =>
                 repository.GetAllAppointmentBySpecialization(It.IsAny<Specialization>()))
             .Returns(() => new List<Appointment>(new Appointment[1]
-                { new Appointment(Guid.Empty, Guid.Empty, DateTime.Today, DateTime.Now) }));
+                { new Appointment(Guid.Empty, Guid.Empty, Guid.Empty, DateTime.Today, DateTime.Now) }));
         
-        var res = _appointmentService.GetAllFree(new Specialization("123"));
+        var res = _appointmentService.GetAllFree(new Specialization(Guid.Empty, "123"));
         
         Assert.True(res.Success);
     }
