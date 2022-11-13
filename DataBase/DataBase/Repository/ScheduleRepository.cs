@@ -60,7 +60,7 @@ public class ScheduleRepository : IScheduleRepository
     public bool AddScheduleById(Guid doctorId, Schedule schedule)
     {
         schedule.DoctorId = doctorId;
-        if (ScheduleValidation.IsValid(schedule).IsFailure) return false;
+        if (ScheduleValidation.IsValid(schedule).IsFailure || doctorId == Guid.Empty) return false;
         Create(schedule);
         return true;
     }
@@ -68,7 +68,7 @@ public class ScheduleRepository : IScheduleRepository
     public bool UpdateScheduleById(Guid doctorId, Schedule schedule)
     {
         schedule.DoctorId = doctorId;
-        if (ScheduleValidation.IsValid(schedule).IsFailure) return false;
+        if (ScheduleValidation.IsValid(schedule).IsFailure || doctorId == Guid.Empty) return false;
         Update(schedule);
         return true;
     }

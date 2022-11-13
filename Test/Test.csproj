@@ -23,6 +23,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Core\Hospital.Domain\Hospital.Domain.csproj" />
+      <ProjectReference Include="..\DataBase\DataBase\DataBase.csproj" />
       <ProjectReference Include="..\Infrastructure\Hospital.Persistence\Hospital.Persistence.csproj" />
     </ItemGroup>
 

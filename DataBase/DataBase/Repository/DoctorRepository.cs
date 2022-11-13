@@ -53,19 +53,21 @@ public class DoctorRepository : IDoctorRepository
 
     public bool CreateDoctor(Doctor doctor)
     {
+        if (DoctorValidation.IsValid(doctor).IsFailure) return false;
         Create(doctor);
         return true;
     }
 
     public bool IsDoctorExists(Guid Id)
     {
+        if (Id == Guid.Empty) return false;
         return _context.Doctors.Any(model => model.Id == Id);
     }
 
-    public bool DeleteDoctor(Guid id)
+    public bool DeleteDoctor(Guid Id)
     {
-        if (!IsDoctorExists(id)) return false;
-        Delete(id);
+        if (Id == Guid.Empty) return false;
+        Delete(Id);
         return true;
     }
 

@@ -53,6 +53,7 @@ public class UserRepository : IUserRepository
 
     public bool IsUserExists(string login)
     {
+        if (login == "") return false;
         return _context.Users.Any(model => model.PhoneNumber == login);
     }
 
@@ -63,6 +64,7 @@ public class UserRepository : IUserRepository
 
     public bool CreateUser(User user)
     {
+        if (UserValidation.IsValid(user).IsFailure) return false;
         Create(user);
         return true;
     }
