@@ -6,6 +6,7 @@ namespace DataBase;
 public class ApplicationContext : DbContext
 {
     public DbSet<UserModel> Users { get; set; }
+    public DbSet<DoctorModel> Doctors { get; set; }
 
     public ApplicationContext(DbContextOptions options) : base(options) {}
 
@@ -15,6 +16,5 @@ public class ApplicationContext : DbContext
 
         modelBuilder.Entity<UserModel>().HasKey(model => model.Id);
         modelBuilder.Entity<UserModel>().HasIndex(model => model.Name);
-        modelBuilder.Entity<UserModel>().HasIndex(model => model.PhoneNumber);
     }
 }
