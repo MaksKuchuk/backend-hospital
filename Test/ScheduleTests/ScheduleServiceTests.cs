@@ -23,8 +23,8 @@ public class ScheduleServiceTests
     public void ScheduleGet_ShouldFail()
     {
         _scheduleRepositoryMock.Setup(repository =>
-                repository.GetScheduleById(It.IsAny<Guid>(), It.IsAny<DateTime>()))
-            .Returns(() => new Schedule(Guid.Empty,
+                repository.GetScheduleByDoctorId(It.IsAny<Guid>(), It.IsAny<DateTime>()))
+            .Returns(() => new Schedule(Guid.Empty, Guid.Empty,
                 new DateTime(2010, 10, 10, 10, 10, 10),
                 new DateTime(2010, 10, 10, 20, 10, 10)
                 ));
@@ -41,7 +41,7 @@ public class ScheduleServiceTests
                 repository.AddScheduleById(It.IsAny<Guid>(), It.IsAny<Schedule>()))
             .Returns(() => false);
 
-        var res = _scheduleService.AddSchedule(Guid.Empty, new Schedule(Guid.Empty,
+        var res = _scheduleService.AddSchedule(Guid.Empty, new Schedule(Guid.Empty, Guid.Empty,
             new DateTime(2010, 10, 10, 10, 10, 10),
             new DateTime(2010, 10, 10, 20, 10, 10)
         ));
@@ -57,7 +57,7 @@ public class ScheduleServiceTests
                 repository.UpdateScheduleById(It.IsAny<Guid>(), It.IsAny<Schedule>()))
             .Returns(() => false);
 
-        var res = _scheduleService.UpdateSchedule(Guid.Empty, new Schedule(Guid.Empty,
+        var res = _scheduleService.UpdateSchedule(Guid.Empty, new Schedule(Guid.Empty, Guid.Empty,
             new DateTime(2010, 10, 10, 10, 10, 10),
             new DateTime(2010, 10, 10, 20, 10, 10)
         ));

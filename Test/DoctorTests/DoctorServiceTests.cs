@@ -38,7 +38,7 @@ public class DoctorServiceTests
             .Returns(() => false);
 
         var res = _doctorService.Add(
-            new Doctor(Guid.Empty, "1", new Specialization("1")));
+            new Doctor(Guid.Empty, "1", new Specialization(Guid.Empty, "1")));
         
         Assert.True(res.IsFailure);
         Assert.Equal("Cannot add a doctor", res.Error);
@@ -79,7 +79,7 @@ public class DoctorServiceTests
         _doctorRepositoryMock.Setup(repository =>
                 repository.GetDoctorById(It.IsAny<Guid>()))
             .Returns(() => 
-                new Doctor(Guid.Empty, "", new Specialization("")));
+                new Doctor(Guid.Empty, "", new Specialization(Guid.Empty, "")));
 
         _doctorRepositoryMock.Setup(repository =>
                 repository.IsDoctorExists(It.IsAny<Guid>()))

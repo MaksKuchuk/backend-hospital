@@ -10,7 +10,7 @@ public class ScheduleValidationTests
 
     public ScheduleValidationTests()
     {
-        _timeSchedule = new Schedule(Guid.Empty, 
+        _timeSchedule = new Schedule(Guid.Empty, Guid.Empty, 
             new DateTime(2010, 10, 10, 20, 10, 10),
             new DateTime(2010, 10, 10, 10, 10, 10)
             );
