@@ -1,3 +1,4 @@
+using Hospital.Domain;
 using Hospital.Persistence.UseCases;
 using Hospital.WebApi.Views;
 using Microsoft.AspNetCore.Mvc;
@@ -14,15 +15,38 @@ public class UserController : ControllerBase
         _service = service;
     }
     
-    [HttpGet("user")]
-    public ActionResult<UserSearchView> GetUserByLogin(string login)
+    [HttpGet("isexists")]
+    public ActionResult<UserSearchView> IsExists(string login)
+    {
+        var res = _service.IsExists(login);
+
+        if (res.IsFailure)
+            return Problem(statusCode: 500, detail: res.Error);
+
+        return Ok(res.Value);
+    }
+    
+    [HttpPost("registeruser")]
+    public ActionResult<UserSearchView> RegisterUser(string phone, string name, Role role)
+    {
+        User user = new User(Guid.Empty, phone, name, role);
+        var res = _service.Register(user);
+
+        if (res.IsFailure)
+            return Problem(statusCode: 500, detail: res.Error);
+
+        return Ok(res.Value);
+    }
+    
+    [HttpGet("findbylogin")]
+    public ActionResult<UserSearchView> FindByLogin(string login)
     {
         if (login == string.Empty)
-            return Problem(statusCode: 404, detail: "login not specified");
+            return Problem(statusCode: 412, detail: "login not specified");
 
         var userRes = _service.FindByLogin(login);
         if (userRes.IsFailure)
-            return Problem(statusCode: 404, detail: userRes.Error);
+            return Problem(statusCode: 500, detail: userRes.Error);
 
         return Ok(new UserSearchView
         {
