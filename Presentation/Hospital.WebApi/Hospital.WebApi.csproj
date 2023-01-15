@@ -8,7 +8,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Hospital.Application\Hospital.Application.csproj" />
+    <ProjectReference Include="..\..\DataBase\DataBase\DataBase.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Hospital.Persistence\Hospital.Persistence.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.5.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.0" />
   </ItemGroup>
 
 </Project>
