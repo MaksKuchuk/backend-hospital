@@ -7,12 +7,12 @@ namespace Hospital.Persistence.UseCases;
 public class UserService
 {
     private IUserRepository _db;
-    
+
     public UserService(IUserRepository db)
     {
         _db = db;
     }
-    
+
     public Result<bool> IsExists(string login)
     {
         if (login == string.Empty)
@@ -34,7 +34,7 @@ public class UserService
         {
             return Result.Fail<User>("Invalid user form");
         }
-        
+
         if (_db.CreateUser(user))
         {
             return Result.Ok(user);
@@ -49,12 +49,12 @@ public class UserService
         {
             return Result.Fail<User>("Login input error");
         }
-        
+
         if (_db.IsUserExists(login))
         {
             return Result.Ok(_db.FindUserByLogin(login));
         }
-        
+
         return Result.Fail<User>("User doesn't exist");
     }
 }
