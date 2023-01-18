@@ -18,11 +18,12 @@ public class UserController : ControllerBase
     [HttpGet("isexists")]
     public ActionResult<UserSearchView> IsExists(string login)
     {
+        
         var res = _service.IsExists(login);
-
+        
         if (res.IsFailure)
             return Problem(statusCode: 500, detail: res.Error);
-
+        
         return Ok(res.Value);
     }
     

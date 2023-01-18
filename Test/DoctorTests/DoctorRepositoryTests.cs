@@ -9,11 +9,11 @@ namespace Test.DoctorTests;
 
 public class DoctorRepositoryTests
 {
-    private readonly DbContextOptionsBuilder<ApplicationContext> _optionsBuilder;
+    private readonly DbContextOptionsBuilder<ApplicationDbContext> _optionsBuilder;
 
     public DoctorRepositoryTests()
     {
-        var optionsBuilder = new DbContextOptionsBuilder<ApplicationContext>();
+        var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
         optionsBuilder.UseNpgsql(
             $"Host=localhost;Port=5452;Database=exampleDB;Username=exampleUser;Password=examplePswd");
         _optionsBuilder = optionsBuilder;
@@ -22,7 +22,7 @@ public class DoctorRepositoryTests
     [Fact]
     public void CreateDoctor_InvalidDoctor_ShouldFail()
     {
-        var context = new ApplicationContext(_optionsBuilder.Options);
+        var context = new ApplicationDbContext(_optionsBuilder.Options);
         var doctorRepository = new DoctorRepository(context);
         
         var res = doctorRepository.CreateDoctor(new Doctor(Guid.Empty, "", 
@@ -35,7 +35,7 @@ public class DoctorRepositoryTests
     [Fact]
     public void IsDoctorExists_InvalidId_ShouldFail()
     {
-        var context = new ApplicationContext(_optionsBuilder.Options);
+        var context = new ApplicationDbContext(_optionsBuilder.Options);
         var doctorRepository = new DoctorRepository(context);
         
         var res = doctorRepository.IsDoctorExists(Guid.Empty);
@@ -46,7 +46,7 @@ public class DoctorRepositoryTests
     [Fact]
     public void DeleteDoctor_InvalidId_ShouldFail()
     {
-        var context = new ApplicationContext(_optionsBuilder.Options);
+        var context = new ApplicationDbContext(_optionsBuilder.Options);
         var doctorRepository = new DoctorRepository(context);
         
         var res = doctorRepository.DeleteDoctor(Guid.Empty);

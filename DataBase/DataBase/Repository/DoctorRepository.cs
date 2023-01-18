@@ -7,9 +7,9 @@ namespace DataBase.Repository;
 
 public class DoctorRepository : IDoctorRepository
 {
-    private readonly ApplicationContext _context;
+    private readonly ApplicationDbContext _context;
 
-    public DoctorRepository(ApplicationContext context)
+    public DoctorRepository(ApplicationDbContext context)
     {
         _context = context;
     }
