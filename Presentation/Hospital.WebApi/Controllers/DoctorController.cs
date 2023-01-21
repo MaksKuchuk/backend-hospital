@@ -1,6 +1,7 @@
 using Hospital.Domain;
 using Hospital.Persistence.UseCases;
 using Hospital.WebApi.Views;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hospital.WebApi.Controllers;
@@ -15,6 +16,7 @@ public class DoctorController : ControllerBase
         _service = service;
     }
 
+    [Authorize]
     [HttpPost("add")]
     public ActionResult<DoctorSearchView> Add(string name, Specialization specialization)
     {
@@ -27,7 +29,8 @@ public class DoctorController : ControllerBase
         return Ok(res.Value);
     }
     
-    [HttpGet("isexists")]
+    [Authorize]
+    [HttpPost("isexists")]
     public ActionResult<AppointmentSearchView> IsExists(Guid id)
     {
         var res = _service.IsExists(id);
@@ -38,7 +41,8 @@ public class DoctorController : ControllerBase
         return Ok(res.Value);
     }
     
-    [HttpGet("deletebyid")]
+    [Authorize]
+    [HttpPost("deletebyid")]
     public ActionResult<AppointmentSearchView> DeleteById(Guid id)
     {
         var res = _service.DeleteById(id);
@@ -49,7 +53,8 @@ public class DoctorController : ControllerBase
         return Ok(res.Value);
     }
     
-    [HttpGet("getall")]
+    [Authorize]
+    [HttpPost("getall")]
     public ActionResult<AppointmentSearchView> GetAll()
     {
         var res = _service.GetAll();
@@ -60,7 +65,8 @@ public class DoctorController : ControllerBase
         return Ok(res.Value);
     }
     
-    [HttpGet("getbyid")]
+    [Authorize]
+    [HttpPost("getbyid")]
     public ActionResult<AppointmentSearchView> GetById(Guid id)
     {
         var res = _service.GetById(id);

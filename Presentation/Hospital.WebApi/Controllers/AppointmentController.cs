@@ -1,6 +1,7 @@
 using Hospital.Domain;
 using Hospital.Persistence.UseCases;
 using Hospital.WebApi.Views;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hospital.WebApi.Controllers;
@@ -15,6 +16,7 @@ public class AppointmentController : ControllerBase
         _service = service;
     }
 
+    [Authorize]
     [HttpPost("addtodoctor")]
     public ActionResult<AppointmentSearchView> AddToDoctor(Guid doctorId, Guid patientId, DateTime startTime, DateTime endTime)
     {
@@ -27,6 +29,7 @@ public class AppointmentController : ControllerBase
         return Ok(res.Success);
     }
 
+    [Authorize]
     [HttpPost("addtofreedoctor")]
     public ActionResult<AppointmentSearchView> AddToFreeDoctor(Guid id, string name)
     {
@@ -39,6 +42,7 @@ public class AppointmentController : ControllerBase
         return Ok(res.Value);
     }
 
+    [Authorize]
     [HttpPost("getallfree")]
     public ActionResult<AppointmentSearchView> GetAllFree(Guid id, string name)
     {
