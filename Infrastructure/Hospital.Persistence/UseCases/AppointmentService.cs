@@ -9,6 +9,7 @@ namespace Hospital.Persistence.UseCases;
 public class AppointmentService
 {
     private IAppointmentRepository _db;
+    private readonly Dictionary<Guid, Mutex> _mutex = new();
 
     public AppointmentService(IAppointmentRepository db)
     {
@@ -22,11 +23,18 @@ public class AppointmentService
             return Result.Fail("Invalid appointment");
         }
         
+        if (!_mutex.ContainsKey(appointment.DoctorId)) {
+            _mutex.Add(appointment.DoctorId, new Mutex());
+        }
+        _mutex.First(d => d.Key == appointment.DoctorId).Value.WaitOne();
+        
         if (_db.AddAppointment(appointment))
         {
+            _mutex.First(d => d.Key == appointment.DoctorId).Value.ReleaseMutex();
             return Result.Ok();
         }
         
+        _mutex.First(d => d.Key == appointment.DoctorId).Value.ReleaseMutex();
         return Result.Fail("Cannot add an appointment");
     }
 

@@ -40,7 +40,7 @@ public class UserServiceTests
     public void UserRegister_EmptyUser_ShouldFail()
     {
         var res = _userService.Register(
-            new User(Guid.NewGuid(), "", "", Role.Admin));
+            new User(Guid.NewGuid(), "", "", Role.Admin, ""));
 
         Assert.True(res.IsFailure);
         Assert.Equal("Invalid user form", res.Error);
@@ -54,7 +54,7 @@ public class UserServiceTests
             .Returns(() => false);
 
         var res = _userService.Register(
-            new User(Guid.Empty, "1", "1", Role.Admin));
+            new User(Guid.Empty, "1", "1", Role.Admin, ""));
         
         Assert.True(res.IsFailure);
         Assert.Equal("Cannot create user", res.Error);
