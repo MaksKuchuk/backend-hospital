@@ -9,11 +9,11 @@ namespace Test.AppointmentTests;
 
 public class AppointmentRepositoryTests
 {
-    private readonly DbContextOptionsBuilder<ApplicationContext> _optionsBuilder;
+    private readonly DbContextOptionsBuilder<ApplicationDbContext> _optionsBuilder;
 
     public AppointmentRepositoryTests()
     {
-        var optionsBuilder = new DbContextOptionsBuilder<ApplicationContext>();
+        var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
         optionsBuilder.UseNpgsql(
             $"Host=localhost;Port=5452;Database=exampleDB;Username=exampleUser;Password=examplePswd");
         _optionsBuilder = optionsBuilder;
@@ -22,7 +22,7 @@ public class AppointmentRepositoryTests
     [Fact]
     public void AddAppointment_InvalidAppointment_ShouldFail()
     {
-        var context = new ApplicationContext(_optionsBuilder.Options);
+        var context = new ApplicationDbContext(_optionsBuilder.Options);
         var appointmentRepository = new AppointmentRepository(context);
         
         var res = appointmentRepository.AddAppointment(

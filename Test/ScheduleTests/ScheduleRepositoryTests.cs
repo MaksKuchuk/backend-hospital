@@ -9,11 +9,11 @@ using Xunit;
 namespace Test.ScheduleTests;
 public class ScheduleRepositoryTests
 {
-    private readonly DbContextOptionsBuilder<ApplicationContext> _optionsBuilder;
+    private readonly DbContextOptionsBuilder<ApplicationDbContext> _optionsBuilder;
 
     public ScheduleRepositoryTests()
     {
-        var optionsBuilder = new DbContextOptionsBuilder<ApplicationContext>();
+        var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
         optionsBuilder.UseNpgsql(
             $"Host=localhost;Port=5452;Database=exampleDB;Username=exampleUser;Password=examplePswd");
         _optionsBuilder = optionsBuilder;
@@ -22,7 +22,7 @@ public class ScheduleRepositoryTests
     [Fact]
     public void UpdateScheduleById_InvalidSchedule_ShouldFail()
     {
-        var context = new ApplicationContext(_optionsBuilder.Options);
+        var context = new ApplicationDbContext(_optionsBuilder.Options);
         var scheduleRepository = new ScheduleRepository(context);
 
         var res = scheduleRepository.UpdateScheduleById(Guid.NewGuid(),
@@ -38,7 +38,7 @@ public class ScheduleRepositoryTests
     [Fact]
     public void UpdateScheduleById_InvalidId_ShouldFail()
     {
-        var context = new ApplicationContext(_optionsBuilder.Options);
+        var context = new ApplicationDbContext(_optionsBuilder.Options);
         var scheduleRepository = new ScheduleRepository(context);
 
         var res = scheduleRepository.UpdateScheduleById(Guid.Empty,
@@ -54,7 +54,7 @@ public class ScheduleRepositoryTests
     [Fact]
     public void AddScheduleById_InvalidSchedule_ShouldFail()
     {
-        var context = new ApplicationContext(_optionsBuilder.Options);
+        var context = new ApplicationDbContext(_optionsBuilder.Options);
         var scheduleRepository = new ScheduleRepository(context);
 
         var res = scheduleRepository.AddScheduleById(Guid.NewGuid(),
@@ -70,7 +70,7 @@ public class ScheduleRepositoryTests
     [Fact]
     public void AddScheduleById_InvalidId_ShouldFail()
     {
-        var context = new ApplicationContext(_optionsBuilder.Options);
+        var context = new ApplicationDbContext(_optionsBuilder.Options);
         var scheduleRepository = new ScheduleRepository(context);
 
         var res = scheduleRepository.AddScheduleById(Guid.Empty,

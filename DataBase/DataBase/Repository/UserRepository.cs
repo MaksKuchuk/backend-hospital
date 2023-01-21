@@ -7,9 +7,9 @@ namespace DataBase.Repository;
 
 public class UserRepository : IUserRepository
 {
-    private readonly ApplicationContext _context;
+    private readonly ApplicationDbContext _context;
 
-    public UserRepository(ApplicationContext context)
+    public UserRepository(ApplicationDbContext context)
     {
         _context = context;
     }

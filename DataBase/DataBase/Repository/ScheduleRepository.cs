@@ -7,9 +7,9 @@ namespace DataBase.Repository;
 
 public class ScheduleRepository : IScheduleRepository
 {
-    private readonly ApplicationContext _context;
+    private readonly ApplicationDbContext _context;
 
-    public ScheduleRepository(ApplicationContext context)
+    public ScheduleRepository(ApplicationDbContext context)
     {
         _context = context;
     }

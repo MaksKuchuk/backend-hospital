@@ -7,9 +7,9 @@ namespace DataBase.Repository;
 
 public class AppointmentRepository : IAppointmentRepository
 {
-    private readonly ApplicationContext _context;
+    private readonly ApplicationDbContext _context;
 
-    public AppointmentRepository(ApplicationContext context)
+    public AppointmentRepository(ApplicationDbContext context)
     {
         _context = context;
     }
