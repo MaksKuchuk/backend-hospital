@@ -1,7 +1,9 @@
 using Hospital.Domain;
 using Hospital.Persistence.UseCases;
 using Hospital.WebApi.Views;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Hospital.WebApi.Token;
 
 namespace Hospital.WebApi.Controllers;
 
@@ -15,6 +17,7 @@ public class UserController : ControllerBase
         _service = service;
     }
     
+    [Authorize]
     [HttpGet("isexists")]
     public ActionResult<UserSearchView> IsExists(string login)
     {
@@ -28,17 +31,27 @@ public class UserController : ControllerBase
     }
     
     [HttpPost("registeruser")]
-    public ActionResult<UserSearchView> RegisterUser(string phone, string name, Role role)
+    public ActionResult<UserSearchView> RegisterUser(string phone, string name, Role role, string pass)
     {
-        User user = new User(Guid.Empty, phone, name, role);
+        User user = new User(Guid.Empty, phone, name, role, pass);
         var res = _service.Register(user);
 
         if (res.IsFailure)
             return Problem(statusCode: 500, detail: res.Error);
 
-        return Ok(res.Value);
+        return Ok(new { access_token = Tokens.GetToken(res.Value) });
     }
-    
+
+    [HttpGet("authuser")]
+    public IActionResult Login(string name, string pass)
+    {
+        Result<User> user = _service.FindByLogin(name);
+        if (user.IsFailure || !user.Value.Pass.Equals(pass))
+            return Problem(statusCode: 401, detail: "Invalid login or password");
+
+        return Ok(new { access_token = Tokens.GetToken(user.Value) });
+    }
+
     [HttpGet("findbylogin")]
     public ActionResult<UserSearchView> FindByLogin(string login)
     {

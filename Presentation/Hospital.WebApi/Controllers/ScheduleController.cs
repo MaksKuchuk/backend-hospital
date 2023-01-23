@@ -1,6 +1,7 @@
 using Hospital.Domain;
 using Hospital.Persistence.UseCases;
 using Hospital.WebApi.Views;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hospital.WebApi.Controllers;
@@ -15,7 +16,8 @@ public class ScheduleController : ControllerBase
         _service = service;
     }
     
-    [HttpGet("getschedule")]
+    [Authorize]
+    [HttpPost("getschedule")]
     public ActionResult<ScheduleSearchView> GetSchedule(Guid id, DateTime time)
     {
         var res = _service.GetSchedule(id, time);
@@ -26,6 +28,7 @@ public class ScheduleController : ControllerBase
         return Ok(res.Value);
     }
     
+    [Authorize]
     [HttpPost("addschedule")]
     public ActionResult<ScheduleSearchView> AddSchedule(Guid id, Guid doctorId, DateTime dayStart, DateTime dayEnd)
     {
@@ -38,6 +41,7 @@ public class ScheduleController : ControllerBase
         return Ok(res.Success);
     }
     
+    [Authorize]
     [HttpPost("updateschedule")]
     public ActionResult<ScheduleSearchView> UpdateSchedule(Guid id, Guid doctorId, DateTime dayStart, DateTime dayEnd)
     {

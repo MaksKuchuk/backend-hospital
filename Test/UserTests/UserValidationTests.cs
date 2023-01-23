@@ -13,12 +13,12 @@ public class UserValidationTests
     
     public UserValidationTests()
     {
-        _emptyUser = new User(Guid.NewGuid(), "", "", Role.Admin);
+        _emptyUser = new User(Guid.NewGuid(), "", "", Role.Admin, "");
         
         _phoneNumberUser = 
-            new User(Guid.NewGuid(), "", "username", Role.Admin);
+            new User(Guid.NewGuid(), "", "username", Role.Admin, "");
         
-        _nameUser = new User(Guid.NewGuid(), "+81234567890", "", Role.Admin);
+        _nameUser = new User(Guid.NewGuid(), "+81234567890", "", Role.Admin, "");
     }
     
     [Fact]

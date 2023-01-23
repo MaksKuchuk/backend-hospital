@@ -9,6 +9,7 @@ namespace Hospital.Persistence.UseCases;
 public class AppointmentService
 {
     private IAppointmentRepository _db;
+    private readonly MutexSingleton _mutexSingleton = MutexSingleton.getInstance();
 
     public AppointmentService(IAppointmentRepository db)
     {
@@ -21,12 +22,19 @@ public class AppointmentService
         {
             return Result.Fail("Invalid appointment");
         }
+
+        if (!_mutexSingleton.getMutexAppointnetn().ContainsKey(appointment.DoctorId)) {
+            _mutexSingleton.getMutexAppointnetn().Add(appointment.DoctorId, new Mutex());
+        }
+        _mutexSingleton.getMutexAppointnetn().First(d => d.Key == appointment.DoctorId).Value.WaitOne();
         
         if (_db.AddAppointment(appointment))
         {
+            _mutexSingleton.getMutexAppointnetn().First(d => d.Key == appointment.DoctorId).Value.ReleaseMutex();
             return Result.Ok();
         }
         
+        _mutexSingleton.getMutexAppointnetn().First(d => d.Key == appointment.DoctorId).Value.ReleaseMutex();
         return Result.Fail("Cannot add an appointment");
     }
 

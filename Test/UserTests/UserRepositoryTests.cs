@@ -23,7 +23,7 @@ public class UserRepositoryTests
         var context = new ApplicationDbContext(_optionsBuilder.Options);
         var userRepository = new UserRepository(context);
         
-        var res = userRepository.CreateUser(new User(Guid.Empty, "", "", Role.Admin));
+        var res = userRepository.CreateUser(new User(Guid.Empty, "", "", Role.Admin, ""));
         context.SaveChanges();
         
         Assert.False(res);
